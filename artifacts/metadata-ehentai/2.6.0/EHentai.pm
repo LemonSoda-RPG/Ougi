@@ -28,7 +28,7 @@ sub plugin_info {
         namespace   => "ehplugin",
         login_from  => "ehlogin",
         author      => "Difegue and others",
-        version     => "2.6",
+        version     => "2.6.0",
         description =>
           "Searches g.e-hentai for tags matching your archive. <br/><i class='fa fa-exclamation-circle'></i> This plugin will use the source: tag of the archive if it exists.",
         icon =>

@@ -19,7 +19,7 @@ sub plugin_info {
         namespace   => "ehdl",
         login_from  => "ehlogin",
         author      => "Difegue",
-        version     => "1.2",
+        version     => "1.2.0",
         description =>
           "Downloads the given e*hentai URL and adds it to LANraragi. This uses GP to call the archiver, so make sure you have enough!",
         parameters  => {

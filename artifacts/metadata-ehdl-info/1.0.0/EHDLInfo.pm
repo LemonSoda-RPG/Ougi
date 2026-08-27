@@ -22,7 +22,7 @@ sub plugin_info {
         type        => "metadata",
         namespace   => "ehd-info",
         author      => "IceBreeze",
-        version     => "1.0",
+        version     => "1.0.0",
         description => "EHDL info.txt metadata parser",
 
         #icon => "",

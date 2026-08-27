@@ -18,7 +18,7 @@ sub plugin_info {
         type            => "metadata",
         namespace       => "copy-archive-tags",
         author          => "IceBreeze",
-        version         => "1.2",
+        version         => "1.2.0",
         description     => "Copy tags from another LRR archive given either the URI or the ID.",
         to_named_params => ['copy_date_added'],
         parameters      => {

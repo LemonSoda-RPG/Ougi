@@ -13,7 +13,7 @@ sub plugin_info {
         type        => "download",
         namespace   => "chaikadl",
         author      => "Difegue",
-        version     => "1.0",
+        version     => "1.0.0",
         description => "Downloads the given chaika.moe URL and adds it to LANraragi. No support for gallery links for now!",
 
         # Downloader-specific metadata

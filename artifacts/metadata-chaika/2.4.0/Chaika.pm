@@ -19,7 +19,7 @@ sub plugin_info {
         type        => "metadata",
         namespace   => "trabant",
         author      => "Difegue",
-        version     => "2.4",
+        version     => "2.4.0",
         description =>
           "Searches chaika.moe for tags matching your archive. This will try to use the thumbnail first, and fallback to a default text search.",
         icon =>

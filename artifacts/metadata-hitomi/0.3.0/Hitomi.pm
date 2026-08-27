@@ -23,7 +23,7 @@ sub plugin_info {
         type        => "metadata",
         namespace   => "hitomiplugin",
         author      => "doublewelp",
-        version     => "0.3",
+        version     => "0.3.0",
         description => "Searches Hitomi.la for tags matching your archive.
           <br>Supports reading the ID from files formatted as \"{Id} Title\" (curly brackets optional)
 		  <br><i class='fa fa-exclamation-circle'></i> This plugin will use the source: tag of the archive if it exists (ex.: source:https://hitomi.la/XXXXX/XXXXX).",

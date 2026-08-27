@@ -25,7 +25,7 @@ sub plugin_info {
         namespace   => "nhplugin",
         login_from  => "nhapiauth",
         author      => "Difegue and others",
-        version     => "2.0",
+        version     => "2.0.0",
         description => "Searches nHentai for tags matching your archive.
           <br>Supports reading the ID from files formatted as \"{Id} Title\" and if not, tries to search for a matching gallery.
           <br><i class='fa fa-exclamation-circle'></i> This plugin will use the source: tag of the archive if it exists.",

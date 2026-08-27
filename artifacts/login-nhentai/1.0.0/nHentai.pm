@@ -16,7 +16,7 @@ sub plugin_info {
         type        => "login",
         namespace   => "nhapiauth",
         author      => "Guerra24",
-        version     => "1.0",
+        version     => "1.0.0",
         description => "Authenticates the nHentai API using an API Key. You can generate one in your profile's settings.",
         parameters  => [
             { type => "string", desc => "API Key" }

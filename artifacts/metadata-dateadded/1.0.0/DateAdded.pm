@@ -20,7 +20,7 @@ sub plugin_info {
         type      => "metadata",
         namespace => "DateAddedPlugin",
         author    => "Utazukin",
-        version   => "1.0",
+        version   => "1.0.0",
         description =>
           "Adds a timestamp tag to your archive manually. <br> This plugin follows the server settings for the timestamp tag and will use file modification time if the server setting is set to 'Use Last modified Time'.",
         icon =>

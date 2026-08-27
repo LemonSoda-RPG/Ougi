@@ -14,7 +14,7 @@ sub plugin_info {
         type        => "login",
         namespace   => "fakkulogin",
         author      => "Nodja, Nixis198",
-        version     => "0.2",
+        version     => "0.2.0",
         description =>
           "Handles login to FAKKU. If the FAKKU metadata plugin stops working, update your 'fakku_sid' cookie and add your own Useragent.",
         parameters => [ { type => "string", desc => "fakku_sid cookie value" }, { type => "string", desc => 'Useragent value' } ]

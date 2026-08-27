@@ -26,7 +26,7 @@ sub plugin_info {
         type        => "metadata",
         namespace   => "ezeplugin",
         author      => "Difegue",
-        version     => "2.4",
+        version     => "2.4.0",
         description =>
           "Collects metadata from eze-style info.json files ({'gallery_info': {xxx} } syntax), either embedded in your archive or in the same folder with the same name. ({archive_name}.json)",
         icon =>

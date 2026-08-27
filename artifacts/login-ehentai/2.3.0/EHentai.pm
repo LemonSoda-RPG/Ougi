@@ -16,7 +16,7 @@ sub plugin_info {
         type      => "login",
         namespace => "ehlogin",
         author    => "Difegue",
-        version   => "2.3",
+        version   => "2.3.0",
         description =>
           "Handles login to E-H. If you have an account that can access fjorded content or exhentai, adding the credentials here will make more archives available for parsing.",
         parameters => [

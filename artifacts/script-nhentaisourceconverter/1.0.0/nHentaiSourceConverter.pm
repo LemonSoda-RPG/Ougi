@@ -17,7 +17,7 @@ sub plugin_info {
         type        => "script",
         namespace   => "nhsrcconv",
         author      => "Guerra24",
-        version     => "1.0",
+        version     => "1.0.0",
         description => "Converts \"source:{id}\" tags with 6 or less digits into \"source:nhentai.net/g/{id}\""
     );
 

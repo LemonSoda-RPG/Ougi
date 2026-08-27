@@ -20,7 +20,7 @@ sub plugin_info {
         type        => "metadata",
         namespace   => "hentagplugin",
         author      => "siliconfeces",
-        version     => "0.3",
+        version     => "0.3.0",
         description => "Parses Hentag info.json files embedded in archives. Achtung, no API calls!",
         parameters  => [],
         icon        =>
