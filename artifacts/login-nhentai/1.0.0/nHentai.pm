@@ -18,9 +18,10 @@ sub plugin_info {
         author      => "Guerra24",
         version     => "1.0.0",
         description => "Authenticates the nHentai API using an API Key. You can generate one in your profile's settings.",
-        parameters  => [
-            { type => "string", desc => "API Key" }
-        ]
+        to_named_params => ['key'],
+        parameters      => {
+            'key' => { type => "string", desc => "API Key" }
+        }
     );
 
 }
@@ -30,7 +31,8 @@ sub plugin_info {
 sub do_login {
     # Login plugins only receive the parameters entered by the user.
     shift;
-    my ( $key ) = @_;
+    my ($params) = @_;
+    my $key = $params->{'key'};
 
     my $logger = get_logger( "nHentai API Auth", "plugins" );
     my $ua     = Mojo::UserAgent->new;

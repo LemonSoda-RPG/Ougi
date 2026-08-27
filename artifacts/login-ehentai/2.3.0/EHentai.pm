@@ -19,12 +19,13 @@ sub plugin_info {
         version   => "2.3.0",
         description =>
           "Handles login to E-H. If you have an account that can access fjorded content or exhentai, adding the credentials here will make more archives available for parsing.",
-        parameters => [
-            { type => "int",    desc => "ipb_member_id cookie" },
-            { type => "string", desc => "ipb_pass_hash cookie" },
-            { type => "string", desc => "star cookie (optional, if present you can view fjorded content without exhentai)" },
-            { type => "string", desc => "igneous cookie(optional, if present you can view exhentai without Europe and America IP)" }
-        ]
+        to_named_params => [ 'ipb_member_id', 'ipb_pass_hash', 'star', 'igneous' ],
+        parameters      => {
+            'ipb_member_id' => { type => "int",    desc => "ipb_member_id cookie" },
+            'ipb_pass_hash' => { type => "string", desc => "ipb_pass_hash cookie" },
+            'star'          => { type => "string", desc => "star cookie (optional, if present you can view fjorded content without exhentai)" },
+            'igneous'       => { type => "string", desc => "igneous cookie(optional, if present you can view exhentai without Europe and America IP)" }
+        }
     );
 
 }
@@ -35,8 +36,12 @@ sub do_login {
 
     # Login plugins only receive the parameters entered by the user.
     shift;
-    my ( $ipb_member_id, $ipb_pass_hash, $star ,$igneous ) = @_;
-    return get_user_agent( $ipb_member_id, $ipb_pass_hash, $star ,$igneous );
+    my ($params) = @_;
+    my $ipb_member_id = $params->{'ipb_member_id'};
+    my $ipb_pass_hash = $params->{'ipb_pass_hash'};
+    my $star          = $params->{'star'};
+    my $igneous       = $params->{'igneous'};
+    return get_user_agent( $ipb_member_id, $ipb_pass_hash, $star, $igneous );
 }
 
 # get_user_agent(ipb cookies)

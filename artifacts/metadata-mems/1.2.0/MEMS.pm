@@ -34,13 +34,21 @@ sub plugin_info {
           . 'AAP//AACDmQAAg5kAAJ+ZAACfmQAAn5kAAISBAACEgQAAn5kAAJ+ZAACfmQAAg5kAAIOZAAD//wAA//8AAA==',
 
         # Custom arguments:
-        parameters => [
-            {   type => 'bool',
+        to_named_params => [ 'save_jpn_title', 'save_additional_metadata', 'use_exhentai' ],
+        parameters      => {
+            'save_jpn_title' => {
+                type => 'bool',
                 desc => 'Save the original Japanese title when available instead of the English or ' . 'romanised title'
             },
-            { type => 'bool', desc => 'Save additional timestamp (time posted) and uploader metadata' },
-            { type => 'bool', desc => 'Use ExHentai link for source instead of E-Hentai link' }
-        ],
+            'save_additional_metadata' => {
+                type => 'bool',
+                desc => 'Save additional timestamp (time posted) and uploader metadata'
+            },
+            'use_exhentai' => {
+                type => 'bool',
+                desc => 'Use ExHentai link for source instead of E-Hentai link'
+            }
+        },
         oneshot_arg => 'Enter a valid EH gallery URL to copy metadata from this EH gallery to this LANraragi archive',
         cooldown    => 4
     );
@@ -50,12 +58,14 @@ sub plugin_info {
 sub get_tags {
 
     shift;
-    my $lrr_info      = shift;
+    my ( $lrr_info, $params ) = @_;
     my $ua            = $lrr_info->{user_agent};
     my $logger        = get_plugin_logger();
     my $gallery_id    = '';
     my $gallery_token = '';
-    my ( $save_jpn_title, $save_additional_metadata, $use_exhentai ) = @_;
+    my $save_jpn_title           = $params->{'save_jpn_title'};
+    my $save_additional_metadata = $params->{'save_additional_metadata'};
+    my $use_exhentai             = $params->{'use_exhentai'};
 
     # Use the URL from oneshot parameters or source tag first when applicable.
     if ( $lrr_info->{oneshot_param} =~ /e(?:x|-)hentai\.org\/g\/(\d+)\/([0-9a-z]+)/i ) {

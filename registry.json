@@ -1,0 +1,279 @@
+{
+   "generated_at" : "2026-08-27T22:31:24Z",
+   "plugins" : {
+      "download-chaika" : {
+         "versions" : {
+            "1.0.0" : {
+               "artifact" : "artifacts/download-chaika/1.0.0/Chaika.pm",
+               "author" : "Difegue",
+               "description" : "Downloads the given chaika.moe URL and adds it to LANraragi. No support for gallery links for now!",
+               "name" : "Chaika.moe Downloader",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "912adfaed9f0bc9aae9d653eac117699e7e14587891126d6a959e35db08e96d0",
+               "version" : "1.0.0"
+            }
+         }
+      },
+      "download-ehentai" : {
+         "versions" : {
+            "1.2.0" : {
+               "artifact" : "artifacts/download-ehentai/1.2.0/EHentai.pm",
+               "author" : "Difegue",
+               "description" : "Downloads the given e*hentai URL and adds it to LANraragi. This uses GP to call the archiver, so make sure you have enough!",
+               "name" : "E*Hentai Downloader",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "b8964172fc90788b489cc17df26cd7e5adae1ed60ad50a0383edacd2599a6727",
+               "version" : "1.2.0"
+            }
+         }
+      },
+      "login-ehentai" : {
+         "versions" : {
+            "2.3.0" : {
+               "artifact" : "artifacts/login-ehentai/2.3.0/EHentai.pm",
+               "author" : "Difegue",
+               "description" : "Handles login to E-H. If you have an account that can access fjorded content or exhentai, adding the credentials here will make more archives available for parsing.",
+               "name" : "E-Hentai",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "34c1265c0033893d6eb612cafaa22b68f07e29069cfdc359d3ee9039e275d27d",
+               "version" : "2.3.0"
+            }
+         }
+      },
+      "login-fakku" : {
+         "versions" : {
+            "0.2.0" : {
+               "artifact" : "artifacts/login-fakku/0.2.0/Fakku.pm",
+               "author" : "Nodja, Nixis198",
+               "description" : "Handles login to FAKKU. If the FAKKU metadata plugin stops working, update your 'fakku_sid' cookie and add your own Useragent.",
+               "name" : "Fakku",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "82ed019d9bc0c7d86145731c59e0a2c5349bd459a1fb573df24ebf174c968f2c",
+               "version" : "0.2.0"
+            }
+         }
+      },
+      "login-nhentai" : {
+         "versions" : {
+            "1.0.0" : {
+               "artifact" : "artifacts/login-nhentai/1.0.0/nHentai.pm",
+               "author" : "Guerra24",
+               "description" : "Authenticates the nHentai API using an API Key. You can generate one in your profile's settings.",
+               "name" : "nHentai",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "f0baa4742c5ba1599cefeb63ea17cc4ce2cbc5cdfc291d461b9ef11098ffe3c1",
+               "version" : "1.0.0"
+            }
+         }
+      },
+      "metadata-chaika" : {
+         "versions" : {
+            "2.4.0" : {
+               "artifact" : "artifacts/metadata-chaika/2.4.0/Chaika.pm",
+               "author" : "Difegue",
+               "description" : "Searches chaika.moe for tags matching your archive. This will try to use the thumbnail first, and fallback to a default text search.",
+               "name" : "Chaika.moe",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "67e3ef95d3a49797c815cd4119b121c56d670672ed8a74a1d30bdd7ad65fd9c8",
+               "version" : "2.4.0"
+            }
+         }
+      },
+      "metadata-chaika-api-json" : {
+         "versions" : {
+            "0.3.0" : {
+               "artifact" : "artifacts/metadata-chaika-api-json/0.3.0/ChaikaFile.pm",
+               "author" : "Difegue & Plebs",
+               "description" : "Collects metadata embedded into your archives as Chaika-style api.json files",
+               "name" : "Chaika.moe api.json",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "612e8afe757af8a67cee0939bf0dc4fff0811208297c9b512f91345e75351cdc",
+               "version" : "0.3.0"
+            }
+         }
+      },
+      "metadata-copy-archive" : {
+         "versions" : {
+            "1.2.0" : {
+               "artifact" : "artifacts/metadata-copy-archive/1.2.0/CopyArchiveTags.pm",
+               "author" : "IceBreeze",
+               "description" : "Copy tags from another LRR archive given either the URI or the ID.",
+               "name" : "Copy Archive Tags",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "e0d2ad873dc4637a391c21e9fd5f3acdbc28e046d723e9cac73589dd333fd998",
+               "version" : "1.2.0"
+            }
+         }
+      },
+      "metadata-dateadded" : {
+         "versions" : {
+            "1.0.0" : {
+               "artifact" : "artifacts/metadata-dateadded/1.0.0/DateAdded.pm",
+               "author" : "Utazukin",
+               "description" : "Adds a timestamp tag to your archive manually. <br> This plugin follows the server settings for the timestamp tag and will use file modification time if the server setting is set to 'Use Last modified Time'.",
+               "name" : "Add Timestamp Tag",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "aed84ae1292def74de6b5dd2fb872243e3448e54f69f5e812a56a8482bd3f6f8",
+               "version" : "1.0.0"
+            }
+         }
+      },
+      "metadata-ehdl-info" : {
+         "versions" : {
+            "1.0.0" : {
+               "artifact" : "artifacts/metadata-ehdl-info/1.0.0/EHDLInfo.pm",
+               "author" : "IceBreeze",
+               "description" : "EHDL info.txt metadata parser",
+               "name" : "EHDL info.txt",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "903e6a0f3d7842349264ebcf897cc49063b2c442405d90fb40012e7a01783f1a",
+               "version" : "1.0.0"
+            }
+         }
+      },
+      "metadata-ehentai" : {
+         "versions" : {
+            "2.6.0" : {
+               "artifact" : "artifacts/metadata-ehentai/2.6.0/EHentai.pm",
+               "author" : "Difegue and others",
+               "description" : "Searches g.e-hentai for tags matching your archive. <br/><i class='fa fa-exclamation-circle'></i> This plugin will use the source: tag of the archive if it exists.",
+               "name" : "E-Hentai",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "543f473c06c5e9b845a387addf9e77fd21568e7199a4aa98a2f794bd37904dfa",
+               "version" : "2.6.0"
+            }
+         }
+      },
+      "metadata-eze-info-json" : {
+         "versions" : {
+            "2.4.0" : {
+               "artifact" : "artifacts/metadata-eze-info-json/2.4.0/Eze.pm",
+               "author" : "Difegue",
+               "description" : "Collects metadata from eze-style info.json files ({'gallery_info': {xxx} } syntax), either embedded in your archive or in the same folder with the same name. ({archive_name}.json)",
+               "name" : "eze",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "15a4616452afeedd0610fd56134a903413b2bb9543d0bea87453adf2bc11a4af",
+               "version" : "2.4.0"
+            }
+         }
+      },
+      "metadata-fakku" : {
+         "versions" : {
+            "1.0.2" : {
+               "artifact" : "artifacts/metadata-fakku/1.0.2/Fakku.pm",
+               "author" : "Difegue, Nodja, Nixis198",
+               "description" : "Searches FAKKU for tags matching your archive. If you have an account, don't forget to enter the matching cookie in the login plugin to be able to access controversial content. <br/><br/> <i class='fa fa-exclamation-circle'></i> <b>This plugin can and will return invalid results depending on what you're searching for!</b> <br/>The FAKKU search API isn't very precise and I recommend you either enable 'Only use current title for exact matches', or use the Chaika.moe plugin when possible.",
+               "name" : "FAKKU",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "b1681cb4f94503c9a6d4a86f9303fde38ac5e88446855fce7b90cdffbfa3cbd0",
+               "version" : "1.0.2"
+            }
+         }
+      },
+      "metadata-hath-galleryinfo-txt" : {
+         "versions" : {
+            "0.2.0" : {
+               "artifact" : "artifacts/metadata-hath-galleryinfo-txt/0.2.0/HatH.pm",
+               "author" : "lily",
+               "description" : "Collects metadata embedded into your archives by HentaiAtHome Downloader's galleryinfo txt files.",
+               "name" : "HentaiAtHome plugin",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "8e630bb2ed47934b642c1be95e5a041a2c71b9ae1b045a6458aa2fc683e81aa0",
+               "version" : "0.2.0"
+            }
+         }
+      },
+      "metadata-hdoujindownloader" : {
+         "versions" : {
+            "0.7.0" : {
+               "artifact" : "artifacts/metadata-hdoujindownloader/0.7.0/HDoujin.pm",
+               "author" : "Pao, Squidy",
+               "description" : "Collects metadata embedded into your archives by HDoujin Downloader's JSON or TXT files.",
+               "name" : "HDoujin",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "eea882ba7c8add21158c88146e3d90bbe4857c01d2f3d933a6e8477812faeeb4",
+               "version" : "0.7.0"
+            }
+         }
+      },
+      "metadata-hentag-info-json" : {
+         "versions" : {
+            "0.3.0" : {
+               "artifact" : "artifacts/metadata-hentag-info-json/0.3.0/Hentag.pm",
+               "author" : "siliconfeces",
+               "description" : "Parses Hentag info.json files embedded in archives. Achtung, no API calls!",
+               "name" : "Hentag",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "59a44a79be5e19ec015f194080059feebd6d1dd0d908b8fbc0000768de061e85",
+               "version" : "0.3.0"
+            }
+         }
+      },
+      "metadata-hitomi" : {
+         "versions" : {
+            "0.3.0" : {
+               "artifact" : "artifacts/metadata-hitomi/0.3.0/Hitomi.pm",
+               "author" : "doublewelp",
+               "description" : "Searches Hitomi.la for tags matching your archive. <br>Supports reading the ID from files formatted as \\\"{Id} Title\\\" (curly brackets optional) <br><i class='fa fa-exclamation-circle'></i> This plugin will use the source: tag of the archive if it exists (ex.: source:https://hitomi.la/XXXXX/XXXXX).",
+               "name" : "Hitomi",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "24436f6b22b02716b979d31c69dde8b563d4a62e0faaca92cdb4d493fc63a454",
+               "version" : "0.3.0"
+            }
+         }
+      },
+      "metadata-koushoku-info-yaml" : {
+         "versions" : {
+            "0.004.1" : {
+               "artifact" : "artifacts/metadata-koushoku-info-yaml/0.004.1/Ksk.pm",
+               "author" : "siliconfeces, Nixis198",
+               "description" : "Collects metadata embedded into your archives as koushoku.yaml/info.yaml files.",
+               "name" : "Koushoku/Koharu.yaml",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "44ef1254db7ade7248b215246a7ed890a1c40a88f68681abb27d2a1ebccf314c",
+               "version" : "0.004.1"
+            }
+         }
+      },
+      "metadata-mems" : {
+         "versions" : {
+            "1.2.0" : {
+               "artifact" : "artifacts/metadata-mems/1.2.0/MEMS.pm",
+               "author" : "Mayriad",
+               "description" : "Accurately retrieves metadata from e-hentai.org using the identifiers appeneded to the ",
+               "name" : "Mayriad\\'s EH Master Script",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "c02a6d68e77f74fcf5b1db429b0af42f96c126673a4266b13a03d7a1b61e6bf3",
+               "version" : "1.2.0"
+            }
+         }
+      },
+      "metadata-nhentai" : {
+         "versions" : {
+            "2.0.0" : {
+               "artifact" : "artifacts/metadata-nhentai/2.0.0/nHentai.pm",
+               "author" : "Difegue and others",
+               "description" : "Searches nHentai for tags matching your archive. <br>Supports reading the ID from files formatted as \\\"{Id} Title\\\" and if not, tries to search for a matching gallery. <br><i class='fa fa-exclamation-circle'></i> This plugin will use the source: tag of the archive if it exists.",
+               "name" : "nHentai",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "7ae103800cbd20c280fc351d3f8de98d5bf5ec32ad4bc58abd207bd5c6288670",
+               "version" : "2.0.0"
+            }
+         }
+      },
+      "script-nhentaisourceconverter" : {
+         "versions" : {
+            "1.0.0" : {
+               "artifact" : "artifacts/script-nhentaisourceconverter/1.0.0/nHentaiSourceConverter.pm",
+               "author" : "Guerra24",
+               "description" : "Converts \\\"source:{id}\\\" tags with 6 or less digits into \\\"source:nhentai.net/g/{id}\\\"",
+               "name" : "nHentai Source Converter",
+               "published_at" : "2026-08-27T22:31:24Z",
+               "sha256" : "200a0901def1c5881c44c8437a1d960d1984d3803c5aeec859a5abf0fde59256",
+               "version" : "1.0.0"
+            }
+         }
+      }
+   },
+   "version" : 1
+}

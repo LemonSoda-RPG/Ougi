@@ -32,10 +32,12 @@ sub plugin_info {
            <i class='fa fa-exclamation-circle'></i> <b>This plugin can and will return invalid results depending on what you're searching for!</b> <br/>The FAKKU search API isn't very precise and I recommend you either enable 'Only use current title for exact matches', or use the Chaika.moe plugin when possible.",
         icon =>
           "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAACZSURBVDhPlY+xDYQwDEWvZgRGYA22Y4frqJDSZhFugiuuo4cqPGT0iTjAYL3C+fGzktc3hEcsQvJq6HtjE2Jdv4viH4a4pWnL8q4A6g+ET9P8YhS2/kqwIZXWnwqChDxPfCFfD76wOzJ2IOR/0DSwnuRKYAKUW3gq2OsJTYM0jr7QVRVwlabJEaw3ARYBcmFXeomxphIeEMIMmh3lOLQR+QQAAAAASUVORK5CYII=",
-        oneshot_arg => "FAKKU Gallery URL (Will attach tags matching this exact gallery to your archive)",
-        parameters  => [
-            { type => "bool", desc => "Add 'Source' tag" }, { type => "bool", desc => "Only use current title for exact matches" }
-        ]
+        oneshot_arg     => "FAKKU Gallery URL (Will attach tags matching this exact gallery to your archive)",
+        to_named_params => ['add_source', 'safe_mode'],
+        parameters      => {
+            'add_source' => { type => "bool", desc => "Add 'Source' tag" },
+            'safe_mode'  => { type => "bool", desc => "Only use current title for exact matches" }
+        }
     );
 
 }
@@ -44,9 +46,10 @@ sub plugin_info {
 sub get_tags {
 
     shift;
-    my $lrr_info = shift;                     # Global info hash
+    my ( $lrr_info, $params ) = @_;            # Global info hash / plugin parameters
     my $ua       = $lrr_info->{user_agent};
-    my ( $add_source, $safe_mode ) = @_;
+    my $add_source = $params->{'add_source'};
+    my $safe_mode  = $params->{'safe_mode'};
 
     my $logger = get_plugin_logger();
 
