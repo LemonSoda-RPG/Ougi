@@ -76,7 +76,7 @@ echo "已创建 $DEST_DIR/$FILE_NAME（version -> $NEWVER）"
 echo
 echo "接下来："
 echo "  1. 编辑 $DEST 实现你的改动"
-echo "  2. perl /path/to/LANraragi/tools/generate_registry.pl .   # 重新生成 registry.json"
+echo "  2. tools/regenerate.sh                                     # 重新生成 registry.json"
 echo "  3. python3 tools/validate_registry.py                      # 本地校验"
 echo "  4. git add -A && git commit -m \"$NS $NEWVER: ...\" && git push"
 echo "  5. 等约 5 分钟（GitHub raw CDN max-age=300），再在实例上执行升级脚本"

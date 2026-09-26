@@ -56,27 +56,42 @@ artifacts/
 
 ## 生成 / 更新 registry.json
 
-`registry.json` 由脚本生成，**不要手写**：
+`registry.json` 是**生成出来的产物清单，不要手写**。它记录每个插件的类型、每个版本的
+制品路径与 sha256——LANraragi 刷新索引时就是拿它判断"有哪些插件、最新版本是哪个、
+下载到的文件对不对"。
+
+用仓库自带的脚本重新生成（它按固定 commit 下载上游的 `generate_registry.pl` 并执行，
+只依赖 Perl 核心模块，不需要额外装东西）：
 
 ```bash
-curl -fsSLO https://raw.githubusercontent.com/Difegue/LANraragi/dev/tools/generate_registry.pl
-perl generate_registry.pl .
+tools/regenerate.sh
 ```
 
-生成器会遍历 `artifacts/`、读取每个插件的 `plugin_info`、计算 sha256，
-并写入 `registry.json`。
+它做三件事：遍历 `artifacts/<namespace>/<version>/*.pm`、解析每个文件的 `plugin_info`、
+对文件算 sha256，然后**覆盖写** `registry.json`。
+
+两点要知道：
+
+- 只写 `registry.json` 一个文件；已有条目里除 `generated_at` 时间戳外都会保留，
+  所以"什么都没改"时 `git diff` 只应看到时间戳变化。
+- 失败时不会破坏已有文件，但如果 `registry.json` **不存在**，它会先建一个空清单再报错退出，
+  于是留下一个空的 `registry.json`。所以生成完一定要跑校验。
 
 ## 本地校验
 
-提交前跑一遍（零依赖，只需要 python3）：
+**只读**，不会生成或修改任何文件；有问题时列出原因并以退出码 1 结束。零依赖，只需要 python3：
 
 ```bash
 python3 tools/validate_registry.py
 ```
 
-CI（`.github/workflows/validate-registry.yml`）会在每次 push / PR 时自动执行：
-先跑上面的校验器，再用上游生成器重新生成一次并比对，防止改了插件忘了更新
-`registry.json`。
+它检查：根字段与 `version`、每个条目的键名是否等于内层 namespace、namespace 是否全小写、
+版本号是否合法 SemVer、必填字段、制品路径是否合法、**sha256 是否与磁盘文件一致**、
+包名是否为 `Managed::<类型>::<文件名>`、制品里的 `plugin_info namespace` 是否等于键名，
+以及**磁盘上每个制品是否都在索引里有条目**（防止改了插件忘了重新生成）。
+
+CI（`.github/workflows/validate-registry.yml`）在每次 push / PR 时自动跑它，
+再用上游生成器重新生成一次并比对 `plugins` 部分，同样是为了抓住"忘了重新生成"。
 
 ## 发布新版本
 
@@ -90,7 +105,7 @@ tools/new-version.sh <namespace> <新版本号>
 
 $EDITOR artifacts/<namespace>/<新版本号>/<Plugin>.pm    # 在这里做你的改动
 
-perl /path/to/LANraragi/tools/generate_registry.pl .    # 重新生成 registry.json
+tools/regenerate.sh                                      # 重新生成 registry.json
 python3 tools/validate_registry.py                      # 本地校验
 git add -A && git commit -m "<namespace> <新版本号>: ..." && git push
 ```
