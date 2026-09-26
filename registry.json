@@ -1,6 +1,21 @@
 {
-   "generated_at" : "2026-09-26T08:29:57Z",
+   "generated_at" : "2026-09-26T08:44:52Z",
    "plugins" : {
+      "addehentaimetatdata" : {
+         "namespace" : "addehentaimetatdata",
+         "type" : "script",
+         "versions" : {
+            "1.3.0" : {
+               "artifact" : "artifacts/addehentaimetatdata/1.3.0/AddEhentaiMetadata.pm",
+               "author" : "CHUSHEN",
+               "description" : "Using the ETagCN plugin to search for metadata for files that do not have a source tag. If No matching EH Gallery Found!, will add source:nogalleryinehentai",
+               "name" : "Add ETagCN Metatdata",
+               "published_at" : "2026-09-26T08:44:52Z",
+               "sha256" : "c7df578d27733987e1fcbfe936db393a72b40e20c4e91ea6e5857f4cd9a2570e",
+               "version" : "1.3.0"
+            }
+         }
+      },
       "chaikadl" : {
          "namespace" : "chaikadl",
          "type" : "download",
@@ -61,6 +76,21 @@
             }
          }
       },
+      "duplicatearchives" : {
+         "namespace" : "duplicatearchives",
+         "type" : "script",
+         "versions" : {
+            "1.1.0" : {
+               "artifact" : "artifacts/duplicatearchives/1.1.0/DuplicateArchives.pm",
+               "author" : "LemonSoda-RPG",
+               "description" : "Lists archives that share the same LANraragi computed ID using the Shinobu filemap.",
+               "name" : "Duplicate Archive Finder",
+               "published_at" : "2026-09-26T08:44:52Z",
+               "sha256" : "597c1a405e0a8e5b1414acfce3c898065fed3fc16581047e3f460f81331f5a70",
+               "version" : "1.1.0"
+            }
+         }
+      },
       "ehd-info" : {
          "namespace" : "ehd-info",
          "type" : "metadata",
@@ -117,6 +147,21 @@
                "name" : "E-Hentai",
                "published_at" : "2026-09-26T08:29:57Z",
                "sha256" : "9c0ebe09374d7ad66557d9cae6c2e5a6fe0fb9d70e90795e1d6c5296a7bc431a",
+               "version" : "2.6.0"
+            }
+         }
+      },
+      "etagcn" : {
+         "namespace" : "etagcn",
+         "type" : "metadata",
+         "versions" : {
+            "2.6.0" : {
+               "artifact" : "artifacts/etagcn/2.6.0/ETagCN.pm",
+               "author" : "GrayZhao & Difegue and others",
+               "description" : "æç´¢ g.e-hentai ä»¥æ¥æ¾ä¸æ¨çå­æ¡£å¹éçæ ç­¾,å¹¶å°åæ ç­¾ç¿»è¯ä¸ºä¸­ææ ç­¾. <br/><i class='fa fa-exclamation-circle'></i> æ­¤æä»¶å°ä½¿ç¨å­æ¡£ç source: tag ï¼å¦æå­å¨ï¼",
+               "name" : "E-Hentai_CN",
+               "published_at" : "2026-09-26T08:44:52Z",
+               "sha256" : "5bc95396db6fe55ea4c7dac01d8272b67fe2c789696477ece4f428c3ec790c40",
                "version" : "2.6.0"
             }
          }
