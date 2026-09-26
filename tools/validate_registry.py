@@ -26,9 +26,11 @@ SEMVER = re.compile(
     r'(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?'
     r'(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
 )
-TIMESTAMP = re.compile(r'\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z\z')
-NAMESPACE = re.compile(r'\A[a-z0-9_-]+\z')
-SHA256 = re.compile(r'\A[a-f0-9]{64}\z')
+# 注意：用 \Z 而不是 \z。\z 是 Perl 写法，Python 直到 3.14 才支持，
+# 在 CI 的 Python 3.12 上会直接抛 re.error。
+TIMESTAMP = re.compile(r'\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z\Z')
+NAMESPACE = re.compile(r'\A[a-z0-9_-]+\Z')
+SHA256 = re.compile(r'\A[a-f0-9]{64}\Z')
 PKG_LINE = re.compile(r'^package\s+(\S+);', re.M)
 NS_IN_PLUGIN_INFO = re.compile(r'\bnamespace\s*=>\s*[\'"]([^\'"]+)[\'"]')
 
