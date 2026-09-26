@@ -80,14 +80,24 @@ CI（`.github/workflows/validate-registry.yml`）会在每次 push / PR 时自�
 
 ## 发布新版本
 
-1. 新建 `artifacts/<namespace>/<新版本号>/<Plugin>.pm`（旧版本目录保留）
-2. 更新该文件 `plugin_info` 里的 `version`
-3. 重新生成 `registry.json`
-4. 跑一遍本地校验
+已发布的版本**不可变**（生成器拒绝同版本目录里 sha256 变化的制品），所以更新要开新版本目录。
+用仓库自带的脚本做这一步，它会同时保证目录名 / `version` 字段 / 包名三者一致：
 
-> 不能原地修改已发布版本的文件：生成器会报
-> `Published artifact bytes changed for existing <namespace>/<version>`。
-> 这是刻意的——索引里按版本记录了 sha256，改动必须落到新版本目录。
+```bash
+tools/new-version.sh <namespace> <新版本号>
+#  例: tools/new-version.sh etagcn 2.6.1
+#  -> artifacts/etagcn/2.6.1/ETagCN.pm（从当前最新版本复制，version 已改好）
+
+$EDITOR artifacts/<namespace>/<新版本号>/<Plugin>.pm    # 在这里做你的改动
+
+perl /path/to/LANraragi/tools/generate_registry.pl .    # 重新生成 registry.json
+python3 tools/validate_registry.py                      # 本地校验
+git add -A && git commit -m "<namespace> <新版本号>: ..." && git push
+```
+
+> 为什么不能原地改：索引里按版本记录了 sha256，而客户端是靠**版本号**判断"有没有更新"的。
+> 原地改同版本号的内容，任何自动升级逻辑都不会发现（版本号没变），
+> 只有手工强制重装同版本才会生效。
 
 ## 更新是怎么被 LANraragi 拿到的
 
