@@ -85,6 +85,28 @@ CI（`.github/workflows/validate-registry.yml`）会在每次 push / PR 时自�
 3. 重新生成 `registry.json`
 4. 跑一遍本地校验
 
+> 不能原地修改已发布版本的文件：生成器会报
+> `Published artifact bytes changed for existing <namespace>/<version>`。
+> 这是刻意的——索引里按版本记录了 sha256，改动必须落到新版本目录。
+
+## 更新是怎么被 LANraragi 拿到的
+
+推送后，实例端分两步，**只有第一步是自动的**：
+
+| 步骤 | 是否自动 | 说明 |
+|---|---|---|
+| 索引 `registry.json` | ✅ **服务启动时自动刷新**所有已配置仓库 | 重启容器即可；不重启则调 `POST /api/registries/{id}/refresh` |
+| 插件文件本身 | ❌ **不会自动更新** | 上游没有自动升级逻辑，必须显式安装：`POST /api/plugins/install {"namespace":"...","registry":"REG_..."}`（不带 `version` 时装 SemVer 最大版本） |
+
+两个实践注意点：
+
+- **raw.githubusercontent.com 有约 5 分钟 CDN 缓存**（`cache-control: max-age=300`）。
+  刚 push 完立刻刷新，可能仍返回旧索引——等几分钟或重试。
+- LANraragi **前端没有插件管理界面**，所以升级只能走 API 或脚本。
+  `LemonSoda-RPG/LANraragi` 的 `lanraragi-deploy/upgrade-plugins.pl` 就是为此写的：
+  一次完成「刷新所有仓库索引 + 把每个 managed 插件升到最新版」，
+  并在升级前用 SemVer 比较，避免把本地更新的版本降级。
+
 ## 已知限制：与内置插件的 namespace 冲突
 
 LANraragi 安装插件时会扫描整个 `lib/LANraragi/Plugin/` 目录（**包含随镜像内置的
