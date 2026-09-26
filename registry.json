@@ -1,5 +1,5 @@
 {
-   "generated_at" : "2026-09-26T08:58:17Z",
+   "generated_at" : "2026-09-26T09:15:56Z",
    "plugins" : {
       "addehentaimetatdata" : {
          "namespace" : "addehentaimetatdata",
@@ -97,6 +97,15 @@
                "published_at" : "2026-09-26T08:58:17Z",
                "sha256" : "d33252ade9e59e3b10c179b860e0c735aa5ad95d9d51507eb98296c086f4428c",
                "version" : "1.1.1"
+            },
+            "1.1.2" : {
+               "artifact" : "artifacts/duplicatearchives/1.1.2/DuplicateArchives.pm",
+               "author" : "LemonSoda-RPG",
+               "description" : "Lists archives that share the same LANraragi computed ID using the Shinobu filemap. The duplicate groups are written to the plugin log.",
+               "name" : "Duplicate Archive Finder",
+               "published_at" : "2026-09-26T09:15:56Z",
+               "sha256" : "bd83dfe15f7f895f237f388cfc63818f7d178a81c4b0cdc32c99ac2d41582bf5",
+               "version" : "1.1.2"
             }
          }
       },
