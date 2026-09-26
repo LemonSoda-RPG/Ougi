@@ -6,36 +6,53 @@ on:
   pull_request:
   workflow_dispatch:
 
+# 需要写权限：生成出来的 registry.json 要由 CI 提交回仓库
+permissions:
+  contents: write
+
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: 校验 registry.json 是否符合规范
-        run: |
-          python3 --version
-          python3 tools/validate_registry.py
-
-      # 用上游权威生成器再生成一次，确认 registry.json 与 artifacts 没有漂移。
-      # 固定到具体提交，避免上游改动导致 CI 行为漂移。
-      - name: 确认 registry.json 与 artifacts 一致
+      # 与 tools/regenerate.sh 用同一个 commit，保证本地与 CI 行为一致
+      - name: 重新生成 registry.json
         env:
           GENERATOR_REF: db3106900d90e07f5723da9ed933cc0399a5670d
         run: |
           curl -fsSL -o /tmp/generate_registry.pl \
             "https://raw.githubusercontent.com/Difegue/LANraragi/${GENERATOR_REF}/tools/generate_registry.pl"
-          cp registry.json /tmp/committed.json
-          perl /tmp/generate_registry.pl .
-          python3 - <<'PY'
-          import json, sys
-          committed = json.load(open('/tmp/committed.json', encoding='utf-8'))
+          if ! perl /tmp/generate_registry.pl . ; then
+            echo "::error::生成 registry.json 失败。最常见的原因是：改动了某个【已发布版本】里的制品文件。"
+            echo "已发布版本不可变——索引按版本记录 sha256，客户端也靠版本号判断有没有更新。"
+            echo "请用 tools/new-version.sh <namespace> <新版本号> 开一个新版本目录，再把改动放进去。"
+            exit 1
+          fi
+
+      - name: 校验 registry.json 是否符合规范
+        run: |
+          python3 --version
+          python3 tools/validate_registry.py
+
+      # 生成器会刷新 generated_at，所以只有插件部分变化时才提交回去
+      - name: 索引有变化则提交回仓库
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          if python3 - <<'PY'
+          import json, subprocess, sys
+          committed = json.loads(subprocess.run(
+              ['git', 'show', 'HEAD:registry.json'], capture_output=True, text=True, check=True).stdout)
           regenerated = json.load(open('registry.json', encoding='utf-8'))
-          # generated_at 每次生成都会刷新，只比插件部分
-          if committed.get('plugins') != regenerated.get('plugins'):
-              print('❌ registry.json 与 artifacts 不一致。')
-              print('   请在仓库根目录运行上游生成器后提交：')
-              print('   perl tools/generate_registry.pl .')
-              sys.exit(1)
-          print('✅ registry.json 与 artifacts 一致')
+          sys.exit(0 if committed.get('plugins') == regenerated.get('plugins') else 1)
           PY
+          then
+            echo "registry.json 已是最新，无需提交"
+            exit 0
+          fi
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add registry.json
+          git commit -m "Regenerate registry.json [skip ci]"
+          git push
