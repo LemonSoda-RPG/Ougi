@@ -162,11 +162,10 @@ python3 tools/validate_registry.py   # 校验
 两个实践注意点：
 
 - **raw.githubusercontent.com 有约 5 分钟 CDN 缓存**（`cache-control: max-age=300`）。
-  刚 push 完立刻刷新，可能仍返回旧索引——等几分钟或重试。
-- LANraragi **前端没有插件管理界面**，所以升级只能走 API 或脚本。
-  `LemonSoda-RPG/LANraragi` 的 `lanraragi-deploy/upgrade-plugins.pl` 就是为此写的：
-  一次完成「刷新所有仓库索引 + 把每个 managed 插件升到最新版」，
-  并在升级前用 SemVer 比较，避免把本地更新的版本降级。
+  刚 push 完立刻重启，可能仍刷到旧索引、于是这次不升级——过几分钟再重启即可。
+- 前端没有插件管理界面。要在**不重启**的情况下立刻升级，用
+  `LemonSoda-RPG/LANraragi` 的 `lanraragi-deploy/upgrade-plugins.pl`
+  （它调用的是服务端同一个升级函数，不是另一份实现）。
 
 ## 已知限制：与内置插件的 namespace 冲突
 
