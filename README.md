@@ -1,10 +1,13 @@
 # Ougi
 
-LANraragi 插件仓库（plugin registry）。LANraragi 可以把本仓库配置为插件源，
+本 fork 的 LANraragi 插件仓库（plugin registry）。LANraragi 可以把本仓库配置为插件源，
 从中安装 / 升级 / 卸载插件。
 
-> 本仓库是 [Difegue/Ougi](https://github.com/Difegue/Ougi) 的 fork，已修正原仓库中
-> 与 LANraragi 校验器不符的部分（详见下方"与原仓库的差异"）。
+只收录**本 fork 自己的插件**；原先从上游 Ougi 收录的那批已全部移除，
+原因见[本仓库收录哪些插件](#本仓库收录哪些插件)。
+
+> 本仓库最初是 [Difegue/Ougi](https://github.com/Difegue/Ougi) 的 fork，
+> 修好了它 `registry.json` 通不过 LANraragi 校验的问题（详见"与原仓库的差异"）。
 
 ## 目录结构
 
@@ -167,30 +170,67 @@ python3 tools/validate_registry.py   # 校验
   `LemonSoda-RPG/LANraragi` 的 `lanraragi-deploy/upgrade-plugins.pl`
   （它调用的是服务端同一个升级函数，不是另一份实现）。
 
-## 已知限制：与内置插件的 namespace 冲突
+## 本仓库收录哪些插件
 
-LANraragi 安装插件时会扫描整个 `lib/LANraragi/Plugin/` 目录（**包含随镜像内置的
-插件**），若 namespace 已存在则拒绝安装：
+只有本 fork 自己的三个插件：
+
+| namespace | 版本 | 类型 |
+|---|---|---|
+| `etagcn` | 2.6.0 | metadata |
+| `addehentaimetatdata` | 1.3.0 | script |
+| `duplicatearchives` | 1.1.0 / 1.1.1 / 1.1.2 | script |
+
+它们已从 LANraragi 镜像里**去掉内置**、改由本仓库分发，
+所以安装时不会撞上"namespace 已存在"的冲突检查（该检查会扫描整个 `Plugin/` 目录）。
+
+原先从上游 Ougi 收录的那 21 个插件（`ehplugin`、`nhplugin`、`trabant` 等）已全部移除，原因：
+
+- 它们的同名插件**已经内置在 LANraragi 镜像里**，安装会被拒绝
+  （`Namespace 'ehplugin' already exists in .../Plugin/Metadata/EHentai.pm`），
+  在本 fork 上根本装不上；
+- 而且它们是**合并前的快照**，落后于镜像里的内置版本
+  （例如 `nhplugin` 缺少上游 `db310690` 的单引号搜索修复）。
+
+留着只会误导。真要让它们也走 registry 分发，应当**以当前内置文件为源重新生成制品**，
+而不是启用仓库里那份旧快照。
+
+## 删除插件时要同时改 registry.json
+
+生成器**不会自动剔除已删除的插件**，而是直接报错退出：
 
 ```
-Namespace 'ehplugin' already exists in .../Plugin/Metadata/EHentai.pm
+Manifest references namespace 'xxx' with no artifact directory
 ```
 
-本仓库中绝大多数插件（如 `ehplugin`、`nhplugin`、`hitomiplugin`、`trabant` 等）
-对应的同名插件都**已经内置在 LANraragi 镜像里**，因此在标准安装上会安装失败。
-这属于上游的设计问题，不是仓库数据错误。
+所以删除一个插件的完整步骤是：
 
-要用起来这些插件，需要先让镜像不再内置它们（改为完全由本仓库分发）。
+```bash
+git rm -r artifacts/<namespace>
+
+# 手动删掉 registry.json 里对应的条目——生成器不做这件事
+python3 - <<'PY'
+import json
+p = 'registry.json'
+d = json.load(open(p, encoding='utf-8'))
+del d['plugins']['<namespace>']
+json.dump(d, open(p, 'w', encoding='utf-8'), indent=2, ensure_ascii=False)
+PY
+
+tools/regenerate.sh                  # 规范化并刷新 generated_at
+python3 tools/validate_registry.py   # 两边不同步时这里会报"找不到制品文件"
+```
 
 ## 与原仓库（Difegue/Ougi）的差异
 
-原仓库的 `registry.json` 无法通过 LANraragi 的校验，原因是：
+当初为了让 `registry.json` 能通过 LANraragi 的校验，修正了下面这些问题。
+涉及的正是后来被移除的那批上游插件，这里保留作为**规范参考**——
+新增插件时依然要满足这些约束：
 
 | 问题 | 原仓库 | 本仓库 |
 |---|---|---|
-| 目录名 = namespace | ✗（用 `metadata-chaika` 这类描述性目录名） | ✓（改为 `trabant` 等真实 namespace） |
+| 目录名 = namespace | ✗（用 `metadata-chaika` 这类描述性目录名） | ✓（必须与 `plugin_info` 的 namespace 一致） |
 | 包名 | `LANraragi::Plugin::Metadata::Chaika` | `LANraragi::Plugin::Managed::Metadata::Chaika` |
-| namespace 大小写 | `DateAddedPlugin`、`Hdoujinplugin` | `dateaddedplugin`、`hdoujinplugin` |
+| namespace 大小写 | `DateAddedPlugin`、`Hdoujinplugin` | 只允许小写 `[a-z0-9_-]` |
 | 版本号 SemVer | `0.004.1`（前导零非法） | `0.4.1` |
 
 （上游生成器里那条"目录名必须等于 namespace"的检查目前是被注释掉的，
