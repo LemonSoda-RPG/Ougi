@@ -90,8 +90,19 @@ python3 tools/validate_registry.py
 包名是否为 `Managed::<类型>::<文件名>`、制品里的 `plugin_info namespace` 是否等于键名，
 以及**磁盘上每个制品是否都在索引里有条目**（防止改了插件忘了重新生成）。
 
-CI（`.github/workflows/validate-registry.yml`）在每次 push / PR 时自动跑它，
-再用上游生成器重新生成一次并比对 `plugins` 部分，同样是为了抓住"忘了重新生成"。
+## CI 会替你做什么
+
+`.github/workflows/validate-registry.yml` 在每次 push / PR 时：
+
+1. 用上游生成器**重新生成** `registry.json`——所以你**不需要**在本地跑生成
+2. 跑上面的校验器
+3. 如果 `plugins` 部分和仓库里的不一致（即你改了插件但没更新索引），
+   就把生成结果**提交回 main**，不需要你手动补
+
+也就是说：**发布/更新插件只需要改 `artifacts/` 下的源码**，索引由 CI 负责。
+
+唯一 CI 替不了你的是**版本号**（见下）。如果改动了已发布版本里的制品，生成器会拒绝，
+CI 会失败并提示你用 `tools/new-version.sh` 开新版本目录。
 
 ## 发布新版本
 
@@ -104,15 +115,21 @@ tools/new-version.sh <namespace> <新版本号>
 #  -> artifacts/etagcn/2.6.1/ETagCN.pm（从当前最新版本复制，version 已改好）
 
 $EDITOR artifacts/<namespace>/<新版本号>/<Plugin>.pm    # 在这里做你的改动
-
-tools/regenerate.sh                                      # 重新生成 registry.json
-python3 tools/validate_registry.py                      # 本地校验
 git add -A && git commit -m "<namespace> <新版本号>: ..." && git push
+# registry.json 由 CI 生成并提交
+```
+
+如果要先自检一遍（可选）：
+
+```bash
+tools/regenerate.sh              # 生成索引
+python3 tools/validate_registry.py   # 校验
 ```
 
 > 为什么不能原地改：索引里按版本记录了 sha256，而客户端是靠**版本号**判断"有没有更新"的。
 > 原地改同版本号的内容，任何自动升级逻辑都不会发现（版本号没变），
-> 只有手工强制重装同版本才会生效。
+> 只有手工强制重装同版本才会生效。版本号该升哪一位是语义决策（修 bug→patch、
+> 加功能→minor、破坏性→major），所以留给作者定，CI 不猜。
 
 ## 更新是怎么被 LANraragi 拿到的
 
