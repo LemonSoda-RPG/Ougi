@@ -133,12 +133,31 @@ python3 tools/validate_registry.py   # 校验
 
 ## 更新是怎么被 LANraragi 拿到的
 
-推送后，实例端分两步，**只有第一步是自动的**：
+推送后，实例端的两个环节：
 
-| 步骤 | 是否自动 | 说明 |
+| 环节 | 上游默认行为 | 本 fork 的行为 |
 |---|---|---|
-| 索引 `registry.json` | ✅ **服务启动时自动刷新**所有已配置仓库 | 重启容器即可；不重启则调 `POST /api/registries/{id}/refresh` |
-| 插件文件本身 | ❌ **不会自动更新** | 上游没有自动升级逻辑，必须显式安装：`POST /api/plugins/install {"namespace":"...","registry":"REG_..."}`（不带 `version` 时装 SemVer 最大版本） |
+| 索引 `registry.json` | ✅ 服务启动时自动刷新所有已配置仓库 | 同左 |
+| 插件文件本身 | ❌ 不自动更新，必须调 `POST /api/plugins/install` | ✅ **服务启动时自动升级**（见下） |
+
+本 fork 在 `LANraragi.pm` 的启动流程里，紧接在"刷新所有仓库索引"之后调用了
+`Model::Plugins::upgrade_managed_plugins()`，因此**重启容器就会把 registry 安装的插件
+升到最新版**，日志里会有：
+
+```
+[LANraragi] [info] Startup plugin upgrade: duplicatearchives 1.1.1 -> 1.1.2
+```
+
+它的边界（都有测试覆盖）：
+
+- 只动**通过 registry 安装**的插件；内置（builtin）和手动放置（sideloaded）的一律不碰
+- 只从**安装它时用的那个 registry**取新版
+- **绝不降级**：索引陈旧（raw.githubusercontent.com 有 ~5 分钟缓存）或本地版本更新时都跳过
+- 单个插件升级失败只记日志，不影响服务启动
+
+不想自动升级就设 `LRR_AUTO_UPDATE_PLUGINS=0`（docker-compose 的 `environment` 里加一行即可）。
+不重启想立刻升级，可以手动跑 `LemonSoda-RPG/LANraragi` 的
+`lanraragi-deploy/upgrade-plugins.pl`——它调用的是同一个函数，不是另一份实现。
 
 两个实践注意点：
 
